@@ -9,14 +9,14 @@ export class Layout {
                 <div class="row">
                     <div class="col-12">
                         <img src="#" alt="Logo">
-                        <nav>
+                        <nav class="hidden visible-sm-flex hidden-md visible-lg-grid hidden-xl visible-xxl-inline-block">
                             <a href="./">Home</a>
                             <a href="./services">Services</a>
                             <a href="./team">Team</a>
                             <a href="./contact-us">Contact us</a>
                         </nav>
-                    <div>
-                <div>
+                    </div>
+                </div>
             </header>`;
         return HTML;
     }
