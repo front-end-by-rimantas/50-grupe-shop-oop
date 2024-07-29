@@ -5,44 +5,67 @@ import { PageTeam } from "./PageTeam.js";
 
 export class Layout {
     constructor() {
+        this.pagesData = [
+            {
+                text: 'Home',
+                content: PageHome,
+                background: 'pink',
+                title: 'Home',
+            },
+            {
+                text: 'Team',
+                content: PageTeam,
+                background: 'grey',
+                title: 'Our team'
+            },
+            {
+                text: 'Services',
+                content: PageServices,
+                background: 'white',
+                title: 'Our services'
+            },
+            {
+                text: 'Contact us',
+                content: PageContact,
+                background: 'aquamarine',
+                title: 'Contact us',
+            },
+        ];
         this.render();
     }
 
     header() {
-        const HTML = `
+        let navHTML = '';
+
+        for (const link of this.pagesData) {
+            navHTML += `<button class="link">${link.text}</button>`;
+        }
+
+        return `
             <header class="container main-header">
                 <div class="row">
                     <div class="col-12 main-header-content">
                         <img class="logo" src="./img/logo.png" alt="Logo">
                         <nav class="hidden visible-sm-flex main-nav">
-                            <button class="link">Home</button>
-                            <button class="link">Services</button>
-                            <button class="link">Team</button>
-                            <button class="link">Contact us</button>
+                            ${navHTML}
                         </nav>
                     </div>
                 </div>
             </header>`;
-        return HTML;
     }
 
     headerEvents() {
         const buttonsDOM = document.querySelectorAll('.main-header-content button');
+        const mainDOM = document.querySelector('main.container');
+        const titleDOM = document.querySelector('head title');
 
-        for (const buttonDOM of buttonsDOM) {
+        for (let i = 0; i < buttonsDOM.length; i++) {
+            const buttonDOM = buttonsDOM[i];
             buttonDOM.addEventListener('click', () => {
-                if (buttonDOM.textContent === 'Home') {
-                    console.log((new PageHome()).render());
-                }
-                if (buttonDOM.textContent === 'Services') {
-                    console.log((new PageServices()).render());
-                }
-                if (buttonDOM.textContent === 'Team') {
-                    console.log((new PageTeam()).render());
-                }
-                if (buttonDOM.textContent === 'Contact us') {
-                    console.log((new PageContact()).render());
-                }
+                const pageClass = this.pagesData[i].content;
+                mainDOM.innerHTML = (new pageClass()).render();
+                document.body.style.backgroundColor = this.pagesData[i].background;
+                titleDOM.textContent = this.pagesData[i].title;
             });
         }
     }
