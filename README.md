@@ -35,6 +35,11 @@ Design: --
     -   [x] main content
     -   [x] footer
 -   [x] navigation between pages
+-   [ ] product CRUD:
+    -   [ ] list
+    -   [ ] add
+    -   [ ] remove
+    -   [ ] update
 
 ## 🧰 Getting Started
 
