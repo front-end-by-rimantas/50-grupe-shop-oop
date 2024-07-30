@@ -30,11 +30,11 @@ Design: --
 ## ✅ Tasks
 
 -   [x] demo completed task
--   [ ] layout render
+-   [x] layout render
     -   [x] header
-    -   [ ] main content
+    -   [x] main content
     -   [x] footer
--   [ ] navigation between pages
+-   [x] navigation between pages
 
 ## 🧰 Getting Started
 

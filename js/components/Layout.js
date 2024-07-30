@@ -31,7 +31,13 @@ export class Layout {
                 title: 'Contact us',
             },
         ];
+        this.DOM = document.getElementById('app');
+        this.mainDOM = null;
+
         this.render();
+        this.headerEvents();
+
+        new this.pagesData[0].content(this.mainDOM);
     }
 
     header() {
@@ -56,41 +62,29 @@ export class Layout {
 
     headerEvents() {
         const buttonsDOM = document.querySelectorAll('.main-header-content button');
-        const mainDOM = document.querySelector('main.container');
-        const titleDOM = document.querySelector('head title');
+        this.mainDOM = document.querySelector('main.container');
 
         for (let i = 0; i < buttonsDOM.length; i++) {
-            const buttonDOM = buttonsDOM[i];
-            buttonDOM.addEventListener('click', () => {
+            buttonsDOM[i].addEventListener('click', () => {
                 const pageClass = this.pagesData[i].content;
-                mainDOM.innerHTML = (new pageClass()).render();
-                document.body.style.backgroundColor = this.pagesData[i].background;
-                titleDOM.textContent = this.pagesData[i].title;
+                new pageClass(this.mainDOM);
             });
         }
     }
 
     main() {
-        const pageObject = new PageContact();
-        const HTML = `
+        return `
             <main class="container">
-                ${pageObject.render()}
+                EMPTY CONTENT
             </main>`;
-
-        return HTML;
     }
 
     footer() {
-        const HTML = '<footer class="container">&copy; Copyright 2024</footer>';
-        return HTML;
+        return '<footer class="container">&copy; Copyright 2024</footer>';
     }
 
     render() {
-        const DOM = document.getElementById('app');
         const HTML = this.header() + this.main() + this.footer();
-
-        DOM.insertAdjacentHTML('beforeend', HTML);
-
-        this.headerEvents();
+        this.DOM.insertAdjacentHTML('beforeend', HTML);
     }
 }
