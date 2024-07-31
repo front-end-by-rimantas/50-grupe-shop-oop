@@ -21,6 +21,7 @@ export class PageShopAddNew {
         this.formDOM.addEventListener('submit', e => {
             e.preventDefault();
             itemList.push({
+                id: 'item_' + Date.now(),
                 title: titleDOM.value,
                 amount: 1,
             });

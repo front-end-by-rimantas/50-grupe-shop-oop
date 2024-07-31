@@ -13,7 +13,11 @@ export class PageShopList {
             const buttonsDOM = rowDOM.querySelectorAll('button');
 
             buttonsDOM[2].addEventListener('click', () => {
-                console.log('deleting...');
+                const idToRemove = rowDOM.id;
+                const localStorageData = localStorage.getItem('itemList');
+                const list = JSON.parse(localStorageData).filter(item => item.id !== idToRemove);
+                localStorage.setItem('itemList', JSON.stringify(list));
+                rowDOM.remove();
             });
         }
     }
@@ -25,7 +29,7 @@ export class PageShopList {
         if (data) {
             for (const item of data) {
                 HTML += `
-                    <tr>
+                    <tr id="${item.id}">
                         <td>${item.title}</td>
                         <td>
                             <button>-</button>
