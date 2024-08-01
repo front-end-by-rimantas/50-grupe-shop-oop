@@ -6,6 +6,46 @@ export class PageShopList {
         this.listEvents();
     }
 
+    minus(rowDOM, amountDOM) {
+        const idToDecrease = rowDOM.id;
+        const localStorageData = localStorage.getItem('itemList');
+        const list = JSON.parse(localStorageData)
+            .map(item => item.id === idToDecrease
+                ? {
+                    ...item,
+                    amount: item.amount > 0 ? (item.amount - 1) : 0,
+                }
+                : item);
+
+        localStorage.setItem('itemList', JSON.stringify(list));
+
+        amountDOM.textContent = list.filter(item => item.id === idToDecrease)[0].amount;
+    }
+
+    plus(rowDOM, amountDOM) {
+        const idToIncrement = rowDOM.id;
+        const localStorageData = localStorage.getItem('itemList');
+        const list = JSON.parse(localStorageData)
+            .map(item => item.id === idToIncrement
+                ? {
+                    ...item,
+                    amount: item.amount + 1,
+                }
+                : item);
+
+        localStorage.setItem('itemList', JSON.stringify(list));
+
+        amountDOM.textContent = list.filter(item => item.id === idToIncrement)[0].amount;
+    }
+
+    delete(rowDOM) {
+        const idToRemove = rowDOM.id;
+        const localStorageData = localStorage.getItem('itemList');
+        const list = JSON.parse(localStorageData).filter(item => item.id !== idToRemove);
+        localStorage.setItem('itemList', JSON.stringify(list));
+        rowDOM.remove();
+    }
+
     listEvents() {
         const rowsDOM = this.DOM.querySelectorAll('tbody > tr');
 
@@ -13,24 +53,9 @@ export class PageShopList {
             const buttonsDOM = rowDOM.querySelectorAll('button');
             const amountDOM = rowDOM.querySelector('span');
 
-            buttonsDOM[1].addEventListener('click', () => {
-                const idToIncrement = rowDOM.id;
-                const localStorageData = localStorage.getItem('itemList');
-                const list = JSON.parse(localStorageData)
-                    .map(item => item.id === idToIncrement ? { ...item, amount: item.amount + 1 } : item);
-
-                localStorage.setItem('itemList', JSON.stringify(list));
-
-                amountDOM.textContent = list.filter(item => item.id === idToIncrement)[0].amount;
-            });
-
-            buttonsDOM[2].addEventListener('click', () => {
-                const idToRemove = rowDOM.id;
-                const localStorageData = localStorage.getItem('itemList');
-                const list = JSON.parse(localStorageData).filter(item => item.id !== idToRemove);
-                localStorage.setItem('itemList', JSON.stringify(list));
-                rowDOM.remove();
-            });
+            buttonsDOM[0].addEventListener('click', () => this.minus(rowDOM, amountDOM));
+            buttonsDOM[1].addEventListener('click', () => this.plus(rowDOM, amountDOM));
+            buttonsDOM[2].addEventListener('click', () => this.delete(rowDOM));
         }
     }
 
